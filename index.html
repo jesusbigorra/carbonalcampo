@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Al Campo · La Mejor Brasa</title>
+<meta name="description" content="Carbón vegetal, leña y briquetas de plantaciones de eucalipto. Distribución en Caracas y exportación.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   AL CAMPO — carbón vegetal premium
+   Mundo visual: noche de brasa. Fondo carbón casi negro, acento
+   brasa (naranja) con resplandor, verde eucalipto como señal
+   natural. Diseño comprometido en oscuro (un solo tema).
+   Layout: bandas a ancho completo, columna central 1200px, hero
+   a dos columnas con resplandor de brasa y partículas de chispa.
+   ============================================================ */
+:root{
+  --ink:#0C0B0A; --ink2:#131110; --panel:#1A1714; --panel2:#201C17;
+  --line:rgba(255,241,224,.12); --line2:rgba(255,241,224,.2);
+  --fg:#F1EBE0; --muted:#A79F92; --faint:#6E675D;
+  --ember:#FF5A23; --ember-2:#FF8A3D; --ember-glow:255,90,35;
+  --green:#7FB544; --green-2:#A6D86A;
+  --ember-ink:#160800;
+  --f-display:"Anton","Arial Narrow","Helvetica Neue",sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Space Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--f-body);font-size:1.0625rem;line-height:1.65;-webkit-text-size-adjust:100%;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--ember);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(64px,10vw,120px);position:relative}
+section{position:relative}
+
+h1,h2,h3,.display{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.012em;line-height:.92;margin:0}
+h2{font-size:clamp(2.4rem,6vw,4.4rem)}
+h3{font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1}
+p{margin:0}
+.lead{font-size:clamp(1.0625rem,1.6vw,1.25rem);color:var(--muted);max-width:60ch}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ember-2)}
+.kicker{display:inline-flex;align-items:center;gap:.6rem}
+.kicker::before{content:"";width:28px;height:2px;background:var(--ember)}
+.sec-head{display:flex;flex-direction:column;gap:1.1rem;margin-bottom:clamp(36px,6vw,64px);max-width:62ch}
+
+/* ---- Header ---- */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(12,11,10,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(12,11,10,.9);z-index:41}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:12px}
+.brand{display:flex;align-items:center;gap:.7rem;min-width:0}
+.brand img{height:42px;width:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.brand .wm{font-family:var(--f-display);text-transform:uppercase;font-size:1.25rem;letter-spacing:.04em;line-height:.9;white-space:nowrap}
+.brand .wm small{display:block;font-family:var(--f-mono);font-size:.5rem;letter-spacing:.28em;color:var(--ember-2);font-weight:400}
+.menu{display:flex;align-items:center;gap:1.75rem}
+.menu nav{display:flex;gap:1.5rem;font-size:.95rem;font-weight:600}
+.menu nav a{color:var(--muted);transition:color .2s}
+.menu nav a:hover{color:var(--fg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:700;font-size:.95rem;padding:.72rem 1.3rem;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s,filter .2s,background .2s,color .2s;font-family:var(--f-body)}
+.btn.sm{padding:.58rem 1.05rem;font-size:.9rem}
+.btn-ember{background:var(--ember);color:var(--ember-ink);box-shadow:0 6px 24px -6px rgba(var(--ember-glow),.6)}
+.btn-ember:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line2);color:var(--fg)}
+.btn-ghost:hover{border-color:var(--ember);color:var(--ember-2)}
+.menu .ham{display:none}
+
+/* ---- Hero ---- */
+.hero{padding-top:clamp(48px,8vw,92px);padding-bottom:clamp(56px,8vw,96px);overflow:hidden}
+.hero .glow{position:absolute;left:50%;bottom:-16%;width:min(1100px,120%);aspect-ratio:1;transform:translateX(-50%);
+  background:radial-gradient(circle at 50% 50%, rgba(var(--ember-glow),.5), rgba(var(--ember-glow),.14) 36%, transparent 62%);
+  filter:blur(18px);z-index:0;animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}
+#spark{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hero .wrap{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(2rem,5vw,4rem);align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:1.6rem}
+.hero h1{font-size:clamp(3.6rem,13vw,8.5rem);line-height:.86}
+.hero h1 .fire{color:var(--ember);text-shadow:0 0 42px rgba(var(--ember-glow),.55)}
+.hero .lead{max-width:46ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:.3rem}
+.hero-media{position:relative;justify-self:center;width:100%;max-width:440px}
+.hero-media .frame{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line2);box-shadow:0 40px 80px -30px #000, inset 0 0 0 1px rgba(255,255,255,.04)}
+.hero-media .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(12,11,10,.55));pointer-events:none}
+.hero-media img{width:100%;height:clamp(380px,56vw,560px);object-fit:cover;object-position:center}
+.hero-media .rim{position:absolute;inset:0;border-radius:18px;box-shadow:inset -60px 0 90px -60px rgba(var(--ember-glow),.9);pointer-events:none}
+.hero-media .tag{position:absolute;left:14px;bottom:14px;z-index:2;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);background:rgba(12,11,10,.6);border:1px solid var(--line2);padding:.4rem .7rem;border-radius:999px;backdrop-filter:blur(6px)}
+
+/* ---- Ticker ---- */
+.ticker{border-block:1px solid var(--line);background:var(--ink2);overflow:hidden}
+.ticker .track{display:flex;gap:0;white-space:nowrap;animation:scroll 32s linear infinite}
+@media (prefers-reduced-motion:reduce){.ticker .track{animation:none;flex-wrap:wrap;white-space:normal;justify-content:center}}
+.ticker .track:hover{animation-play-state:paused}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker span{display:inline-flex;align-items:center;gap:.9rem;padding:16px 28px;font-family:var(--f-mono);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ticker span b{color:var(--ember-2);font-weight:700}
+.ticker span::after{content:"◆";color:var(--faint);font-size:.6rem;margin-left:1.1rem}
+
+/* ---- Productos ---- */
+.prod-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 30px 60px -30px #000}
+.card .pic{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--ink2)}
+.card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .pic img{transform:scale(1.05)}
+.card .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(12,11,10,.72))}
+.card .pic .chip{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.34rem .6rem;border-radius:999px;background:rgba(12,11,10,.66);border:1px solid var(--line2);backdrop-filter:blur(6px)}
+.card .pic .chip.exp{color:var(--ember-ink);background:var(--ember);border-color:transparent}
+.card .body{padding:1.4rem 1.4rem 1.6rem;display:flex;flex-direction:column;gap:.7rem;flex:1}
+.card h3{color:var(--fg)}
+.card p{color:var(--muted);font-size:.98rem}
+.card .sizes{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:auto;padding-top:.6rem}
+.card .sizes span{font-family:var(--f-mono);font-size:.78rem;padding:.3rem .6rem;border:1px solid var(--line2);border-radius:6px;color:var(--green-2)}
+/* briquette svg card */
+.briq{width:100%;height:100%;display:block}
+
+/* ---- Origen ---- */
+.origen{background:var(--ink2);border-block:1px solid var(--line)}
+.origen-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem);align-items:center}
+.origen .media{display:grid;grid-template-columns:1.3fr .9fr;gap:1rem;grid-template-rows:1fr}
+.origen .media figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);position:relative}
+.origen .media img{width:100%;height:100%;object-fit:cover}
+.origen .media .tall{grid-row:1;height:clamp(320px,46vw,460px)}
+.origen .media .stack{display:flex;flex-direction:column;gap:1rem}
+.origen .media .stack figure{flex:1}
+.origen .copy{display:flex;flex-direction:column;gap:1.2rem}
+.pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.4rem}
+.pill{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;padding:.5rem .9rem;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}
+.pill b{color:var(--green-2);font-weight:700}
+
+/* ---- Exportación ---- */
+.export{position:relative;overflow:hidden}
+.export .glow{position:absolute;right:-10%;top:-20%;width:600px;aspect-ratio:1;background:radial-gradient(circle,rgba(var(--ember-glow),.22),transparent 60%);filter:blur(10px);z-index:0}
+.export .wrap{position:relative;z-index:1}
+.export-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem);align-items:start}
+.spec{border:1px solid var(--line2);border-radius:14px;overflow:hidden;background:var(--panel)}
+.spec .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:1rem;padding:.95rem 1.2rem;border-top:1px solid var(--line);font-size:.95rem}
+.spec .row:first-child{border-top:0}
+.spec dt{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+.spec dd{margin:0;color:var(--fg)}
+.export .note{font-size:.88rem;color:var(--faint);margin-top:1rem}
+
+/* ---- Forms ---- */
+.forms{background:var(--ink2);border-block:1px solid var(--line)}
+.form-tabs{display:inline-flex;gap:.4rem;padding:.35rem;background:var(--panel);border:1px solid var(--line);border-radius:999px;margin-bottom:2.5rem}
+.form-tabs button{font-family:var(--f-body);font-weight:700;font-size:.95rem;color:var(--muted);background:transparent;border:0;padding:.6rem 1.3rem;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.form-tabs button[aria-selected="true"]{background:var(--ember);color:var(--ember-ink)}
+.panel-form{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,4rem);align-items:start}
+.panel-form .intro h2{font-size:clamp(2rem,4.5vw,3.2rem)}
+.panel-form .intro p{color:var(--muted);margin-top:1rem}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem 1.2rem}
+.fld{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.fld.wide{grid-column:1/-1}
+.fld label{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+input,select,textarea{width:100%;font-family:var(--f-body);font-size:1rem;color:var(--fg);background:var(--ink);border:1.5px solid var(--line2);border-radius:9px;padding:.8rem .9rem;transition:border-color .2s}
+input::placeholder,textarea::placeholder{color:var(--faint)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ember)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+textarea{min-height:5.5rem;resize:vertical}
+.submit{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:.3rem}
+.result{grid-column:1/-1;display:flex;flex-direction:column;gap:.8rem;border:1.5px solid var(--line2);border-radius:12px;padding:1.3rem;background:var(--panel)}
+.result textarea{min-height:10rem;font-family:var(--f-mono);font-size:.86rem;line-height:1.7}
+.status{font-size:.92rem;color:var(--green-2);min-height:1.3em}
+
+/* ---- Footer ---- */
+footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
+.foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem}
+.foot-brand{display:flex;align-items:center;gap:.9rem}
+.foot-brand img{height:56px}
+.foot-brand .wm{font-family:var(--f-display);text-transform:uppercase;font-size:1.5rem;line-height:.9}
+.foot-brand .wm small{display:block;font-family:var(--f-mono);font-size:.56rem;letter-spacing:.22em;color:var(--ember-2);font-weight:400;margin-top:.3rem}
+.foot-col{display:flex;flex-direction:column;gap:.5rem;font-size:.95rem;color:var(--muted)}
+.foot-col .h{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:.3rem}
+.foot-col a:hover{color:var(--ember-2)}
+.legal{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--faint);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between}
+
+/* ---- Responsive ---- */
+@media (max-width:900px){
+  .hero-grid,.origen-grid,.export-grid,.panel-form{grid-template-columns:minmax(0,1fr)}
+  .hero-media{order:-1;max-width:360px}
+  .origen .media{grid-template-columns:1fr 1fr}
+  .menu nav{display:none}
+}
+@media (max-width:680px){
+  .prod-grid{grid-template-columns:minmax(0,1fr)}
+  .origen .media{grid-template-columns:1fr}
+  .origen .media .tall{height:clamp(260px,70vw,360px)}
+  form{grid-template-columns:minmax(0,1fr)}
+  .brand .wm{font-size:1.05rem}
+  .menu .btn{display:none}
+}
+
+/* ---- Documentos ---- */
+.subhead{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember-2);margin:0 0 1.2rem;display:flex;align-items:center;gap:.8rem}
+.subhead::after{content:"";flex:1;height:1px;background:var(--line)}
+.subhead.second{margin-top:2.8rem}
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem}
+.doc{display:flex;gap:1rem;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.2rem;transition:border-color .2s,transform .2s}
+.doc:hover{border-color:var(--line2);transform:translateY(-3px)}
+.doc .ic{flex:0 0 auto;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--panel2);border:1px solid var(--line);color:var(--ember-2)}
+.doc .meta{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.doc h4{margin:0;font-size:1rem;font-weight:700;font-family:var(--f-body);text-transform:none;letter-spacing:0;color:var(--fg)}
+.doc p{font-size:.85rem;color:var(--muted);line-height:1.5}
+.doc .act{margin-top:.5rem;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.4rem}
+.doc .act a{color:var(--ember-2);border-bottom:1px solid transparent}
+.doc .act a:hover{border-bottom-color:var(--ember-2)}
+.doc .act.pend{color:var(--faint)}
+.docs-note{font-size:.86rem;color:var(--faint);margin-top:1.2rem}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Al Campo, inicio">
+      <img src="assets/logo.png" alt="Logo Al Campo, carbón vegetal de eucalipto">
+      <span class="wm">Al Campo<small>La Mejor Brasa</small></span>
+    </a>
+    <div class="menu">
+      <nav aria-label="Secciones">
+        <a href="#productos">Productos</a>
+        <a href="#origen">Origen</a>
+        <a href="#exportacion">Exportación</a>
+        <a href="#documentos">Documentos</a>
+        <a href="#distribuidores">Distribuidores</a>
+      </nav>
+      <a class="btn btn-ember sm" href="#pedidos">Quiero comprar</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="band hero" id="inicio">
+    <div class="glow" aria-hidden="true"></div>
+    <canvas id="spark" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow kicker">Carbón vegetal · Leña · Briquetas</p>
+          <h1>La mejor<br><span class="fire">brasa</span></h1>
+          <p class="lead">Carbón vegetal de plantaciones de eucalipto, cultivadas y permisadas por nosotros. Brasa pareja, sin aditivos químicos. Distribuimos en Caracas y exportamos.</p>
+          <div class="cta">
+            <a class="btn btn-ember" href="#distribuidores">Quiero distribuir</a>
+            <a class="btn btn-ghost" href="#pedidos">Quiero comprar</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="frame">
+            <img src="assets/bag-logs.jpg" alt="Saco de carbón vegetal Al Campo frente a troncos de eucalipto">
+            <span class="rim" aria-hidden="true"></span>
+            <span class="tag">Carbón vegetal · 3 kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-label="Atributos del producto">
+    <div class="track" id="track">
+      <span><b>Sin aditivos químicos</b></span><span>Encendido rápido</span><span>Mayor duración</span><span>Calor constante</span><span>Madera de eucalipto</span><span>Plantación propia y permisada</span>
+      <span><b>Sin aditivos químicos</b></span><span>Encendido rápido</span><span>Mayor duración</span><span>Calor constante</span><span>Madera de eucalipto</span><span>Plantación propia y permisada</span>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <section class="band" id="productos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow kicker">La gama</p>
+        <h2>Tres formas de<br>hacer brasa</h2>
+        <p class="lead">Carbón vegetal, leña de eucalipto y briquetas. Todo de la misma plantación, con la misma exigencia de calidad.</p>
+      </div>
+      <div class="prod-grid">
+
+        <article class="card">
+          <div class="pic">
+            <span class="chip">Nacional</span>
+            <img src="assets/carbon-3kg.jpg" alt="Saco de carbón vegetal Al Campo de 3 kg">
+          </div>
+          <div class="body">
+            <h3>Carbón vegetal</h3>
+            <p>Brasa pareja y duradera para parrilla, horno y pollo a la brasa. Prende rápido y mantiene el calor.</p>
+            <div class="sizes"><span>1,5 kg</span><span>3 kg</span><span>4,5 kg</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="pic">
+            <span class="chip">Nacional</span>
+            <img src="assets/lena.jpg" alt="Paquete de leña de madera de eucalipto Al Campo">
+          </div>
+          <div class="body">
+            <h3>Leña de eucalipto</h3>
+            <p>Madera seca de plantación, lista para encender. Potenciador natural del sabor, respetuosa con el ambiente.</p>
+            <div class="sizes"><span>Madera de eucalipto</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="pic">
+            <span class="chip exp">Nacional + Exportación</span>
+            <svg class="briq" viewBox="0 0 400 300" role="img" aria-label="Briquetas de carbón vegetal apiladas">
+              <defs>
+                <linearGradient id="bq" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#2a2622"/><stop offset="1" stop-color="#15120f"/>
+                </linearGradient>
+                <radialGradient id="emb" cx="50%" cy="120%" r="80%">
+                  <stop offset="0" stop-color="rgba(255,90,35,.5)"/><stop offset="60%" stop-color="rgba(255,90,35,0)"/>
+                </radialGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#bq)"/>
+              <rect width="400" height="300" fill="url(#emb)"/>
+              <g stroke="#0c0b0a" stroke-width="2">
+                <!-- pillow briquettes -->
+                <g fill="#3a3430">
+                  <ellipse cx="150" cy="186" rx="52" ry="30"/>
+                  <ellipse cx="250" cy="186" rx="52" ry="30"/>
+                  <ellipse cx="120" cy="150" rx="52" ry="30"/>
+                  <ellipse cx="220" cy="150" rx="52" ry="30"/>
+                  <ellipse cx="185" cy="116" rx="52" ry="30"/>
+                </g>
+                <g fill="#49413b">
+                  <ellipse cx="150" cy="182" rx="40" ry="20"/>
+                  <ellipse cx="250" cy="182" rx="40" ry="20"/>
+                  <ellipse cx="120" cy="146" rx="40" ry="20"/>
+                  <ellipse cx="220" cy="146" rx="40" ry="20"/>
+                  <ellipse cx="185" cy="112" rx="40" ry="20"/>
+                </g>
+              </g>
+              <g fill="none" stroke="#FF5A23" stroke-width="2.5" opacity=".85" stroke-linecap="round">
+                <path d="M150 182 l0 -7 M250 182 l0 -7 M120 146 l0 -7 M220 146 l0 -7 M185 112 l0 -7"/>
+              </g>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Briquetas</h3>
+            <p>Densidad uniforme y más brasa por kilo. Estándar de calidad para venta nacional y para exportación.</p>
+            <div class="sizes"><span>Venta nacional</span><span>Importación</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGEN -->
+  <section class="band origen" id="origen">
+    <div class="wrap">
+      <div class="origen-grid">
+        <div class="media">
+          <figure class="tall"><img src="assets/eucalipto-logs.jpg" alt="Troncos de eucalipto apilados y secando bajo techo"></figure>
+          <div class="stack">
+            <figure><img src="assets/sign-madera.jpg" alt="Sello de madera tallada de Al Campo, La Mejor Brasa"></figure>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="eyebrow kicker">Del eucaliptal a tu brasa</p>
+          <h2>Origen<br>controlado</h2>
+          <p class="lead">La materia prima sale de plantaciones propias y permisadas. Secamos la madera bajo techo y la convertimos en carbón sin aditivos. Ese control de punta a punta es lo que da brasa pareja, lote tras lote.</p>
+          <div class="pills">
+            <span class="pill"><b>Plantación</b> propia</span>
+            <span class="pill"><b>Madera</b> permisada</span>
+            <span class="pill"><b>Secado</b> bajo techo</span>
+            <span class="pill"><b>Sin</b> aditivos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPORTACIÓN -->
+  <section class="band export" id="exportacion">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="export-grid">
+        <div class="copy">
+          <p class="eyebrow kicker">Export · USA</p>
+          <h2>Briquetas para<br>exportación</h2>
+          <p class="lead">Producimos briquetas de carbón vegetal de eucalipto para el mercado internacional, con trazabilidad de origen y análisis por lote. Volumen y calidad consistentes para importadores y distribuidores.</p>
+          <div class="cta" style="display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.6rem">
+            <a class="btn btn-ember" href="#exportar">Solicitar muestras</a>
+            <a class="btn btn-ghost" href="#exportar">Cotización FOB</a>
+          </div>
+          <p class="note">Operación de exportación en estructuración. La trazabilidad y los certificados se emiten por lote.</p>
+        </div>
+        <dl class="spec" aria-label="Ficha técnica de briquetas para exportación">
+          <div class="row"><dt>Producto</dt><dd>Briqueta de carbón vegetal</dd></div>
+          <div class="row"><dt>Materia prima</dt><dd>Eucalipto de plantación propia</dd></div>
+          <div class="row"><dt>Humedad</dt><dd>Según COA por lote</dd></div>
+          <div class="row"><dt>Carbono fijo</dt><dd>Según COA por lote</dd></div>
+          <div class="row"><dt>Cenizas</dt><dd>Según COA por lote</dd></div>
+          <div class="row"><dt>Empaque</dt><dd>Según requerimiento del comprador</dd></div>
+          <div class="row"><dt>Partida arancelaria</dt><dd>4402.90.00</dd></div>
+          <div class="row"><dt>Origen</dt><dd>Venezuela</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCUMENTOS -->
+  <section class="band" id="documentos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow kicker">Documentación</p>
+        <h2>Fichas y<br>permisología</h2>
+        <p class="lead">Fichas técnicas por producto y la documentación legal de origen. Respaldo para compradores nacionales y para exportación.</p>
+      </div>
+
+      <p class="subhead">Fichas técnicas</p>
+      <div class="docs-grid">
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+          <div class="meta"><h4>Carbón vegetal</h4><p>Humedad, carbono fijo, cenizas y duración de brasa.</p><span class="act pend">Pendiente de carga</span></div>
+        </article>
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+          <div class="meta"><h4>Leña de eucalipto</h4><p>Especie, secado y recomendaciones de uso.</p><span class="act pend">Pendiente de carga</span></div>
+        </article>
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+          <div class="meta"><h4>Briquetas</h4><p>Dimensiones, densidad, aglutinante y empaque.</p><span class="act pend">Pendiente de carga</span></div>
+        </article>
+      </div>
+
+      <p class="subhead second">Permisología y certificados</p>
+      <div class="docs-grid">
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div class="meta"><h4>Aprovechamiento forestal</h4><p>Plantación propia permisada ante el ente competente.</p><span class="act pend">Pendiente de carga</span></div>
+        </article>
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div class="meta"><h4>Guía de movilización</h4><p>Transporte legal de la materia prima a planta.</p><span class="act pend">Pendiente de carga</span></div>
+        </article>
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+          <div class="meta"><h4>Certificado de análisis (COA)</h4><p>Emitido por lote. Disponible para exportación.</p><span class="act pend">Bajo solicitud</span></div>
+        </article>
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div class="meta"><h4>Certificado de origen</h4><p>Para operaciones de exportación.</p><span class="act pend">Bajo solicitud</span></div>
+        </article>
+        <article class="doc">
+          <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+          <div class="meta"><h4>Registro mercantil</h4><p>Comercializadora Al Campo 11, C.A.</p><span class="act pend">Bajo solicitud</span></div>
+        </article>
+      </div>
+      <p class="docs-note">Los documentos marcados “Bajo solicitud” se comparten con compradores e importadores calificados. El resto se publican para descarga cuando nos envíes los PDF.</p>
+    </div>
+  </section>
+
+  <!-- FORMULARIOS -->
+  <section class="band forms" id="distribuidores">
+    <div class="wrap">
+      <div class="form-tabs" role="tablist" aria-label="Tipo de solicitud">
+        <button role="tab" id="tab-cli" aria-selected="true" aria-controls="form-cli">Quiero comprar</button>
+        <button role="tab" id="tab-exp" aria-selected="false" aria-controls="form-exp">Exportación</button>
+        <button role="tab" id="tab-dist" aria-selected="false" aria-controls="form-dist">Soy distribuidor</button>
+      </div>
+
+      <!-- Distribuidores -->
+      <div class="panel-form" id="form-dist" role="tabpanel" aria-labelledby="tab-dist" hidden>
+        <div class="intro">
+          <h2>Quiero ser<br>distribuidor</h2>
+          <div class="pills" style="margin-top:1.6rem">
+            <span class="pill"><b>Margen</b> atractivo</span>
+            <span class="pill"><b>Suministro</b> garantizado todo el año</span>
+            <span class="pill"><b>Producción</b> propia de plantación</span>
+            <span class="pill"><b>Zona</b> asignada</span>
+            <span class="pill"><b>Marca</b> con demanda</span>
+          </div>
+        </div>
+        <form id="distForm" novalidate>
+          <div class="fld"><label for="d-emp">Empresa o negocio</label><input id="d-emp" name="empresa" type="text" autocomplete="organization" required></div>
+          <div class="fld"><label for="d-con">Persona de contacto</label><input id="d-con" name="contacto" type="text" autocomplete="name" required></div>
+          <div class="fld"><label for="d-wa">WhatsApp</label><input id="d-wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="0414 000 0000" required></div>
+          <div class="fld"><label for="d-ciu">Ciudad y estado</label><input id="d-ciu" name="ciudad" type="text" autocomplete="address-level2" required></div>
+          <div class="fld"><label for="d-tipo">Tipo de negocio</label>
+            <select id="d-tipo" name="tipo" required>
+              <option value="">Elige una opción</option>
+              <option>Mayorista o distribuidor regional</option>
+              <option>Cadena de autoservicios</option>
+              <option>Bodegón, carnicería o minimarket</option>
+              <option>Restaurante o parrillera</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="fld"><label for="d-alm">Almacén seco y techado</label>
+            <select id="d-alm" name="almacen" required>
+              <option value="">Elige una opción</option>
+              <option>Sí, tengo</option>
+              <option>No, aún no</option>
+            </select>
+          </div>
+          <div class="fld wide"><label for="d-msg">Zona a cubrir y volumen estimado</label><textarea id="d-msg" name="mensaje" placeholder="Ej.: Valencia y alrededores, 500 sacos/mes"></textarea></div>
+          <div class="submit"><button class="btn btn-ember" type="submit">Preparar solicitud</button></div>
+          <div class="result" id="d-res" hidden>
+            <label class="eyebrow" for="d-out">Resumen de tu solicitud</label>
+            <textarea id="d-out" readonly></textarea>
+            <div class="submit" style="margin:0">
+              <button class="btn btn-ghost sm" type="button" data-copy="d-out">Copiar resumen</button>
+              <a class="btn btn-ember sm" id="d-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
+            </div>
+            <p class="status" id="d-st" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Exportación -->
+      <div class="panel-form" id="form-exp" role="tabpanel" aria-labelledby="tab-exp" hidden>
+        <div class="intro">
+          <h2>Exportar<br>briquetas</h2>
+          <p>Para importadores y distribuidores internacionales. Cuéntanos destino y volumen, y te enviamos muestras y cotización.</p>
+          <div class="pills" style="margin-top:1.6rem">
+            <span class="pill"><b>Trazabilidad</b> de origen</span>
+            <span class="pill"><b>COA</b> por lote</span>
+            <span class="pill"><b>Volumen</b> consistente</span>
+          </div>
+        </div>
+        <form id="expForm" novalidate>
+          <div class="fld"><label for="e-emp">Empresa</label><input id="e-emp" name="empresa" type="text" autocomplete="organization" required></div>
+          <div class="fld"><label for="e-con">Persona de contacto</label><input id="e-con" name="contacto" type="text" autocomplete="name" required></div>
+          <div class="fld"><label for="e-email">Correo</label><input id="e-email" name="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required></div>
+          <div class="fld"><label for="e-wa">Teléfono / WhatsApp</label><input id="e-wa" name="telefono" type="tel" inputmode="tel" autocomplete="tel"></div>
+          <div class="fld"><label for="e-pais">País de destino</label><input id="e-pais" name="pais" type="text" autocomplete="country-name" required></div>
+          <div class="fld"><label for="e-prod">Producto</label>
+            <select id="e-prod" name="producto" required>
+              <option value="">Elige una opción</option>
+              <option>Briquetas</option>
+              <option>Carbón vegetal</option>
+            </select>
+          </div>
+          <div class="fld"><label for="e-vol">Volumen mensual estimado</label><input id="e-vol" name="volumen" type="text" placeholder="Ej.: 2 contenedores / 40 t"></div>
+          <div class="fld"><label for="e-dest">Puerto o destino</label><input id="e-dest" name="destino" type="text" placeholder="Ej.: Miami, FL"></div>
+          <div class="fld wide"><label for="e-msg">Mensaje</label><textarea id="e-msg" name="mensaje" placeholder="Empaque, certificados, plazos..."></textarea></div>
+          <div class="submit"><button class="btn btn-ember" type="submit">Solicitar muestras y cotización</button></div>
+          <div class="result" id="e-res" hidden>
+            <label class="eyebrow" for="e-out">Resumen de tu solicitud</label>
+            <textarea id="e-out" readonly></textarea>
+            <div class="submit" style="margin:0">
+              <button class="btn btn-ghost sm" type="button" data-copy="e-out">Copiar resumen</button>
+              <a class="btn btn-ember sm" id="e-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
+            </div>
+            <p class="status" id="e-st" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Clientes -->
+      <div class="panel-form" id="form-cli" role="tabpanel" aria-labelledby="tab-cli">
+        <div class="intro">
+          <h2>Haz tu pedido</h2>
+          <p>Dinos qué producto quieres y a dónde, y preparamos tu solicitud para enviarla al equipo de ventas. Atendemos hogar, parrilleros y comercios.</p>
+        </div>
+        <form id="cliForm" novalidate>
+          <div class="fld"><label for="c-nom">Nombre</label><input id="c-nom" name="nombre" type="text" autocomplete="name" required></div>
+          <div class="fld"><label for="c-wa">WhatsApp</label><input id="c-wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="0414 000 0000" required></div>
+          <div class="fld"><label for="c-ciu">Ciudad o zona de entrega</label><input id="c-ciu" name="ciudad" type="text" autocomplete="address-level2" required></div>
+          <div class="fld"><label for="c-prod">Producto</label>
+            <select id="c-prod" name="producto" required>
+              <option value="">Elige una opción</option>
+              <option>Carbón vegetal</option>
+              <option>Leña de eucalipto</option>
+              <option>Briquetas</option>
+            </select>
+          </div>
+          <div class="fld"><label for="c-pres">Presentación</label>
+            <select id="c-pres" name="presentacion">
+              <option value="">Elige una opción</option>
+              <option>1,5 kg</option>
+              <option>3 kg</option>
+              <option>4,5 kg</option>
+              <option>Al mayor / bulto</option>
+            </select>
+          </div>
+          <div class="fld"><label for="c-cant">Cantidad</label><input id="c-cant" name="cantidad" type="text" placeholder="Ej.: 10 sacos" required></div>
+          <div class="fld wide"><label for="c-msg">Comentario (opcional)</label><textarea id="c-msg" name="mensaje" placeholder="Horario de entrega, uso, etc."></textarea></div>
+          <div class="submit"><button class="btn btn-ember" type="submit">Preparar pedido</button></div>
+          <div class="result" id="c-res" hidden>
+            <label class="eyebrow" for="c-out">Resumen de tu pedido</label>
+            <textarea id="c-out" readonly></textarea>
+            <div class="submit" style="margin:0">
+              <button class="btn btn-ghost sm" type="button" data-copy="c-out">Copiar resumen</button>
+              <a class="btn btn-ember sm" id="c-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
+            </div>
+            <p class="status" id="c-st" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <span id="pedidos" aria-hidden="true"></span>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="assets/logo.png" alt="Logo Al Campo">
+        <span class="wm">Al Campo<small>La Mejor Brasa</small></span>
+      </div>
+      <div class="foot-col">
+        <span class="h">Productos</span>
+        <a href="#productos">Carbón vegetal</a>
+        <a href="#productos">Leña de eucalipto</a>
+        <a href="#productos">Briquetas</a>
+      </div>
+      <div class="foot-col">
+        <span class="h">Comercial</span>
+        <a href="#distribuidores">Ser distribuidor</a>
+        <a href="#pedidos">Hacer un pedido</a>
+        <a href="#exportacion">Exportación</a>
+      </div>
+      <div class="foot-col">
+        <span class="h">Contacto</span>
+        <a href="https://www.instagram.com/carbonalcampo11/" target="_blank" rel="noopener">@carbonalcampo11</a>
+        <span>Caracas, Venezuela</span>
+      </div>
+    </div>
+    <div class="legal">
+      <span>Comercializadora Al Campo 11, C.A. · RIF 31259112-9</span>
+      <span>Carbón vegetal de plantaciones de eucalipto</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  /* ---- WhatsApp destino: deja "" hasta tener el número oficial.
+     Formato internacional sin + ni espacios, ej: 584140000000 ---- */
+  var WA_NUMBER = "";
+
+  /* ---- Chispas del hero (canvas), suaves y con respeto a reduce-motion ---- */
+  var canvas = document.getElementById('spark');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canvas && !reduce) {
+    var ctx = canvas.getContext('2d'), W=0, H=0, dpr=Math.min(window.devicePixelRatio||1,2), parts=[], raf=0;
+    function resize(){
+      var r = canvas.getBoundingClientRect(); W=r.width; H=r.height;
+      canvas.width=W*dpr; canvas.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    function mk(){ return {x:Math.random()*W, y:H+Math.random()*60, r:Math.random()*1.8+.5, s:Math.random()*.5+.2, vy:-(Math.random()*.6+.3), vx:(Math.random()-.5)*.3, life:Math.random()}; }
+    function init(){ parts=[]; var n=Math.round(Math.min(48, W/22)); for(var i=0;i<n;i++){var p=mk(); p.y=Math.random()*H; parts.push(p);} }
+    function tick(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<parts.length;i++){
+        var p=parts[i]; p.y+=p.vy; p.x+=p.vx; p.life+=0.006;
+        if(p.y< -10 || p.x<-10 || p.x>W+10){ parts[i]=mk(); continue; }
+        var a=(Math.sin(p.life*6)*0.5+0.5)*0.8;
+        var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+        g.addColorStop(0,'rgba(255,150,70,'+a+')'); g.addColorStop(1,'rgba(255,90,35,0)');
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*4,0,6.2832); ctx.fill();
+      }
+      raf=requestAnimationFrame(tick);
+    }
+    resize(); init(); tick();
+    var to; window.addEventListener('resize', function(){ clearTimeout(to); to=setTimeout(function(){resize();init();},200); });
+    document.addEventListener('visibilitychange', function(){ if(document.hidden){cancelAnimationFrame(raf);} else {raf=requestAnimationFrame(tick);} });
+  }
+
+  /* ---- Tabs de formularios (comprar / exportación / distribuidor) ---- */
+  var TABS={cli:{t:'tab-cli',p:'form-cli'},exp:{t:'tab-exp',p:'form-exp'},dist:{t:'tab-dist',p:'form-dist'}};
+  function show(which){
+    if(!TABS[which]) which='cli';
+    for(var k in TABS){
+      var on=k===which;
+      var tb=document.getElementById(TABS[k].t), pn=document.getElementById(TABS[k].p);
+      if(tb) tb.setAttribute('aria-selected', on?'true':'false');
+      if(pn) pn.hidden=!on;
+    }
+  }
+  Object.keys(TABS).forEach(function(k){
+    var tb=document.getElementById(TABS[k].t);
+    if(tb) tb.addEventListener('click', function(){ show(k); });
+  });
+  function scrollForms(){ try{ document.getElementById('distribuidores').scrollIntoView({behavior:'smooth',block:'start'}); }catch(_){ } }
+  function routeHash(){
+    var h=location.hash;
+    if(h==='#pedidos'){ show('cli'); }
+    else if(h==='#exportar'){ show('exp'); scrollForms(); }
+    else if(h==='#distribuidores'){ show('dist'); }
+  }
+  window.addEventListener('hashchange', routeHash); routeHash();
+
+  function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
+  function waLink(text){ return 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text); }
+
+  function wire(formId, resId, outId, stId, waBtnId, build){
+    var form=document.getElementById(formId);
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!form.checkValidity()){ form.reportValidity(); return; }
+      var text=build();
+      var out=document.getElementById(outId); out.value=text;
+      document.getElementById(resId).hidden=false;
+      var st=document.getElementById(stId);
+      var waBtn=document.getElementById(waBtnId);
+      if(WA_NUMBER){ waBtn.href=waLink(text); waBtn.hidden=false; st.textContent='Listo. Envíalo por WhatsApp o copia el texto.'; }
+      else { waBtn.hidden=true; st.textContent='Listo. Copia el texto y envíalo a Al Campo.'; }
+      try{ document.getElementById(resId).scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(_){}
+    });
+  }
+
+  wire('distForm','d-res','d-out','d-st','d-wa-btn', function(){
+    var L=['Solicitud de distribuidor · Al Campo',
+      'Empresa: '+val('d-emp'),
+      'Contacto: '+val('d-con'),
+      'WhatsApp: '+val('d-wa'),
+      'Ciudad y estado: '+val('d-ciu'),
+      'Tipo de negocio: '+val('d-tipo'),
+      'Almacén seco y techado: '+val('d-alm')];
+    if(val('d-msg')) L.push('Zona y volumen: '+val('d-msg'));
+    return L.join('\n');
+  });
+
+  wire('cliForm','c-res','c-out','c-st','c-wa-btn', function(){
+    var L=['Pedido · Al Campo',
+      'Nombre: '+val('c-nom'),
+      'WhatsApp: '+val('c-wa'),
+      'Ciudad: '+val('c-ciu'),
+      'Producto: '+val('c-prod')];
+    if(val('c-pres')) L.push('Presentación: '+val('c-pres'));
+    L.push('Cantidad: '+val('c-cant'));
+    if(val('c-msg')) L.push('Comentario: '+val('c-msg'));
+    return L.join('\n');
+  });
+
+  wire('expForm','e-res','e-out','e-st','e-wa-btn', function(){
+    var L=['Solicitud de exportación · Al Campo',
+      'Empresa: '+val('e-emp'),
+      'Contacto: '+val('e-con'),
+      'Correo: '+val('e-email')];
+    if(val('e-wa')) L.push('Teléfono: '+val('e-wa'));
+    L.push('País de destino: '+val('e-pais'));
+    L.push('Producto: '+val('e-prod'));
+    if(val('e-vol')) L.push('Volumen mensual: '+val('e-vol'));
+    if(val('e-dest')) L.push('Puerto o destino: '+val('e-dest'));
+    if(val('e-msg')) L.push('Mensaje: '+val('e-msg'));
+    return L.join('\n');
+  });
+
+  /* ---- Copiar ---- */
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('[data-copy]'); if(!b) return;
+    var ta=document.getElementById(b.getAttribute('data-copy'));
+    var st=b.closest('.result').querySelector('.status');
+    function fallback(){ ta.focus(); ta.select(); if(st) st.textContent='Selecciona el texto y cópialo.'; }
+    try{ navigator.clipboard.writeText(ta.value).then(function(){ if(st) st.textContent='Resumen copiado.'; }, fallback); }
+    catch(_){ fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
