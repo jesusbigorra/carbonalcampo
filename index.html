@@ -593,6 +593,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <textarea id="d-out" readonly></textarea>
             <div class="submit" style="margin:0">
               <button class="btn btn-ghost sm" type="button" data-copy="d-out">Copiar resumen</button>
+              <a class="btn btn-ghost sm" id="d-email-btn" target="_blank" rel="noopener">Enviar por correo</a>
               <a class="btn btn-ember sm" id="d-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
             </div>
             <p class="status" id="d-st" role="status" aria-live="polite"></p>
@@ -633,6 +634,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <textarea id="e-out" readonly></textarea>
             <div class="submit" style="margin:0">
               <button class="btn btn-ghost sm" type="button" data-copy="e-out">Copiar resumen</button>
+              <a class="btn btn-ghost sm" id="e-email-btn" target="_blank" rel="noopener">Enviar por correo</a>
               <a class="btn btn-ember sm" id="e-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
             </div>
             <p class="status" id="e-st" role="status" aria-live="polite"></p>
@@ -675,6 +677,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <textarea id="c-out" readonly></textarea>
             <div class="submit" style="margin:0">
               <button class="btn btn-ghost sm" type="button" data-copy="c-out">Copiar resumen</button>
+              <a class="btn btn-ghost sm" id="c-email-btn" target="_blank" rel="noopener">Enviar por correo</a>
               <a class="btn btn-ember sm" id="c-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
             </div>
             <p class="status" id="c-st" role="status" aria-live="polite"></p>
@@ -728,7 +731,8 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
      Formato internacional sin + ni espacios, ej: 584140000000 ---- */
   var WA_NUMBER = "584141128181";
   /* Formulario-a-correo (FormSubmit): entrega cada lead a info@carbonalcampo.com */
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/info@carbonalcampo.com";
+  var MAIL_TO = "info@carbonalcampo.com";
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/"+MAIL_TO;
 
   /* ---- Chispas del hero (canvas), suaves y con respeto a reduce-motion ---- */
   var canvas = document.getElementById('spark');
@@ -821,8 +825,9 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 
   function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
   function waLink(text){ return 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text); }
+  function mailLink(subject, text){ return 'mailto:'+MAIL_TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text); }
 
-  function wire(formId, resId, outId, stId, waBtnId, subject, build){
+  function wire(formId, resId, outId, stId, waBtnId, emailBtnId, subject, build){
     var form=document.getElementById(formId);
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -833,18 +838,20 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
       var st=document.getElementById(stId);
       var waBtn=document.getElementById(waBtnId);
       if(WA_NUMBER){ waBtn.href=waLink(text); waBtn.hidden=false; } else { waBtn.hidden=true; }
+      var emailBtn=document.getElementById(emailBtnId);
+      if(emailBtn) emailBtn.href=mailLink(subject, text);
       try{ document.getElementById(resId).scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(_){}
       st.textContent='Enviando...';
       var payload={ _subject: subject, _template:'table', resumen:text };
       try{ new FormData(form).forEach(function(v,k){ payload[k]=v; }); }catch(_){}
       fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
         .then(function(r){ return r.json(); })
-        .then(function(d){ st.textContent=(d&&(d.success===true||d.success==='true'))?'¡Recibido! Te contactamos pronto.':'Guardado. Copia el resumen y envíalo por si acaso.'; })
-        .catch(function(){ st.textContent='No se pudo enviar automático. Copia el resumen'+(WA_NUMBER?' o usa WhatsApp.':' y envíalo a Al Campo.'); });
+        .then(function(d){ st.textContent=(d&&(d.success===true||d.success==='true'))?'¡Recibido! Te contactamos pronto.':'Guardado. Si no te contactamos pronto, usa "Enviar por correo" o WhatsApp.'; })
+        .catch(function(){ st.textContent='No se pudo enviar automático. Usa "Enviar por correo" o WhatsApp para asegurar tu solicitud.'; });
     });
   }
 
-  wire('distForm','d-res','d-out','d-st','d-wa-btn','Nuevo distribuidor · Al Campo', function(){
+  wire('distForm','d-res','d-out','d-st','d-wa-btn','d-email-btn','Nuevo distribuidor · Al Campo', function(){
     var L=['Solicitud de distribuidor · Al Campo',
       'Empresa: '+val('d-emp'),
       'Contacto: '+val('d-con'),
@@ -856,7 +863,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     return L.join('\n');
   });
 
-  wire('cliForm','c-res','c-out','c-st','c-wa-btn','Nuevo pedido · Al Campo', function(){
+  wire('cliForm','c-res','c-out','c-st','c-wa-btn','c-email-btn','Nuevo pedido · Al Campo', function(){
     var L=['Pedido · Al Campo',
       'Nombre: '+val('c-nom'),
       'WhatsApp: '+val('c-wa'),
@@ -868,7 +875,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     return L.join('\n');
   });
 
-  wire('expForm','e-res','e-out','e-st','e-wa-btn','Solicitud de exportación · Al Campo', function(){
+  wire('expForm','e-res','e-out','e-st','e-wa-btn','e-email-btn','Solicitud de exportación · Al Campo', function(){
     var L=['Solicitud de exportación · Al Campo',
       'Empresa: '+val('e-emp'),
       'Contacto: '+val('e-con'),
