@@ -131,6 +131,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .origen .media .tall{grid-row:1;height:clamp(320px,46vw,460px)}
 .origen .media .stack{display:flex;flex-direction:column;gap:1rem}
 .origen .media .stack figure{flex:1}
+.origen .media figure .cap{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);background:rgba(12,11,10,.62);border:1px solid var(--line2);padding:.3rem .55rem;border-radius:999px;backdrop-filter:blur(6px)}
 .origen .copy{display:flex;flex-direction:column;gap:1.2rem}
 .pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.4rem}
 .pill{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;padding:.5rem .9rem;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}
@@ -147,6 +148,27 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .spec dt{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
 .spec dd{margin:0;color:var(--fg)}
 .export .note{font-size:.88rem;color:var(--faint);margin-top:1rem}
+
+/* ---- Proceso (franja de fotos) ---- */
+.filmstrip{border-block:1px solid var(--line)}
+.fs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.fs-grid figure{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--ink2)}
+.fs-grid figure img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.fs-grid figure:hover img{transform:scale(1.06)}
+.fs-grid figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(12,11,10,.75))}
+.fs-grid figcaption{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg)}
+.fs-grid .a{grid-row:span 2}
+.fs-grid .a img{aspect-ratio:3/4}
+.fs-grid .b img,.fs-grid .c img{aspect-ratio:4/3}
+.fs-grid .d{grid-row:span 2}
+.fs-grid .d img{aspect-ratio:3/4}
+.fs-grid .e img{aspect-ratio:16/9}
+@media (max-width:900px){
+  .fs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fs-grid .a,.fs-grid .d{grid-row:span 1}
+  .fs-grid .a img,.fs-grid .d img{aspect-ratio:4/3}
+}
+@media (max-width:680px){ .fs-grid{grid-template-columns:1fr} }
 
 /* ---- Forms ---- */
 .forms{background:var(--ink2);border-block:1px solid var(--line)}
@@ -180,6 +202,8 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 .foot-col{display:flex;flex-direction:column;gap:.5rem;font-size:.95rem;color:var(--muted)}
 .foot-col .h{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:.3rem}
 .foot-col a:hover{color:var(--ember-2)}
+.foot-col .wa{display:inline-flex;align-items:center;gap:.55rem}
+.foot-col .wa svg{width:17px;height:17px;flex:0 0 auto;color:#25D366}
 .legal{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--faint);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between}
 
 /* ---- Responsive ---- */
@@ -214,6 +238,12 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 .doc .act a:hover{border-bottom-color:var(--ember-2)}
 .doc .act.pend{color:var(--faint)}
 .docs-note{font-size:.86rem;color:var(--faint);margin-top:1.2rem}
+
+/* ---- Movimiento: aparición al hacer scroll + parallax ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .75s cubic-bezier(.2,.75,.25,1)}
+.reveal.in{opacity:1;transform:none}
+.px{will-change:transform}
+@media (prefers-reduced-motion:reduce){ .reveal{opacity:1!important;transform:none!important;transition:none} }
 </style>
 </head>
 <body>
@@ -228,6 +258,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
       <nav aria-label="Secciones">
         <a href="#productos">Productos</a>
         <a href="#origen">Origen</a>
+        <a href="#proceso">Proceso</a>
         <a href="#exportacion">Exportación</a>
         <a href="#documentos">Documentos</a>
         <a href="#distribuidores">Distribuidores</a>
@@ -256,9 +287,9 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
         </div>
         <div class="hero-media">
           <div class="frame">
-            <img src="assets/bag-logs.jpg" alt="Saco de carbón vegetal Al Campo frente a troncos de eucalipto">
+            <img src="assets/plantacion.jpg" alt="Hileras de eucaliptos en plantación, tierra roja entre los surcos">
             <span class="rim" aria-hidden="true"></span>
-            <span class="tag">Carbón vegetal · 3 kg</span>
+            <span class="tag">Plantación propia · Eucalipto</span>
           </div>
         </div>
       </div>
@@ -359,8 +390,12 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     <div class="wrap">
       <div class="origen-grid">
         <div class="media">
-          <figure class="tall"><img src="assets/eucalipto-logs.jpg" alt="Troncos de eucalipto apilados y secando bajo techo"></figure>
+          <figure class="tall">
+            <img src="assets/filtrado-carbon.jpg" alt="Dos trabajadores cerniendo carbón vegetal con malla de madera, eucaliptal al fondo">
+            <span class="cap">Filtrado en planta</span>
+          </figure>
           <div class="stack">
+            <figure><img src="assets/eucalipto-logs.jpg" alt="Troncos de eucalipto apilados y secando bajo techo"><span class="cap">Secado bajo techo</span></figure>
             <figure><img src="assets/sign-madera.jpg" alt="Sello de madera tallada de Al Campo, La Mejor Brasa"></figure>
           </div>
         </div>
@@ -375,6 +410,23 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <span class="pill"><b>Sin</b> aditivos</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="band filmstrip" id="proceso">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow kicker">De la plantación a la bolsa</p>
+        <h2>Así se ve<br>el proceso</h2>
+      </div>
+      <div class="fs-grid">
+        <figure class="a"><img src="assets/plantacion.jpg" alt="Plantación de eucalipto"><figcaption>Plantación</figcaption></figure>
+        <figure class="b"><img src="assets/eucalipto-logs.jpg" alt="Troncos secando bajo techo"><figcaption>Secado</figcaption></figure>
+        <figure class="c"><img src="assets/carbon-3kg.jpg" alt="Bolsa de carbón vegetal de 3 kg"><figcaption>Empacado</figcaption></figure>
+        <figure class="d"><img src="assets/filtrado-carbon.jpg" alt="Filtrado del carbón con malla"><figcaption>Filtrado</figcaption></figure>
+        <figure class="e" style="grid-column:2/4"><img src="assets/lena.jpg" alt="Bolsa de leña de eucalipto Al Campo frente a troncos apilados"><figcaption>Leña de eucalipto</figcaption></figure>
       </div>
     </div>
   </section>
@@ -625,6 +677,8 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
       </div>
       <div class="foot-col">
         <span class="h">Contacto</span>
+        <a class="wa" href="https://wa.me/584141128181" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.87 9.87 0 001.513 5.26l-.999 3.648 3.735-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>0414 112 8181</a>
+        <a class="wa" href="https://wa.me/584142502960" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.87 9.87 0 001.513 5.26l-.999 3.648 3.735-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>0414 250 2960</a>
         <a href="https://www.instagram.com/carbonalcampo11/" target="_blank" rel="noopener">@carbonalcampo11</a>
         <span>Caracas, Venezuela</span>
       </div>
@@ -641,7 +695,9 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
   "use strict";
   /* ---- WhatsApp destino: deja "" hasta tener el número oficial.
      Formato internacional sin + ni espacios, ej: 584140000000 ---- */
-  var WA_NUMBER = "";
+  var WA_NUMBER = "584141128181";
+  /* Formulario-a-correo (FormSubmit): entrega cada lead a info@carbonalcampo.com */
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/info@carbonalcampo.com";
 
   /* ---- Chispas del hero (canvas), suaves y con respeto a reduce-motion ---- */
   var canvas = document.getElementById('spark');
@@ -671,6 +727,27 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     document.addEventListener('visibilitychange', function(){ if(document.hidden){cancelAnimationFrame(raf);} else {raf=requestAnimationFrame(tick);} });
   }
 
+  /* ---- Movimiento: aparición al hacer scroll + parallax (respeta reduce-motion) ---- */
+  if(!reduce){
+    var rev=[].slice.call(document.querySelectorAll('.sec-head,.card,.origen .copy,.export .copy,.spec,.doc,.panel-form .intro,.foot-grid'));
+    rev.forEach(function(el){ el.classList.add('reveal'); });
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } }); }, {threshold:0.1, rootMargin:'0px 0px -6% 0px'});
+      rev.forEach(function(el){ io.observe(el); });
+    } else { rev.forEach(function(el){ el.classList.add('in'); }); }
+
+    var pxList=[];
+    var hm=document.querySelector('.hero-media'); if(hm){ hm.classList.add('px'); pxList.push({el:hm,f:-0.05,s:0}); }
+    [['.origen .media .tall img',-0.09,1.14],['.origen .media .stack img',0.07,1.14]].forEach(function(cfg){
+      var el=document.querySelector(cfg[0]); if(el){ el.classList.add('px'); pxList.push({el:el,f:cfg[1],s:cfg[2]}); }
+    });
+    var ticking=false;
+    function runPx(){ var vh=window.innerHeight||1; for(var i=0;i<pxList.length;i++){ var p=pxList[i]; var r=p.el.getBoundingClientRect(); var mid=(r.top+r.height/2)-vh/2; var ty=mid*p.f; p.el.style.transform='translate3d(0,'+ty.toFixed(1)+'px,0)'+(p.s?(' scale('+p.s+')'):''); } ticking=false; }
+    window.addEventListener('scroll', function(){ if(!ticking){ ticking=true; requestAnimationFrame(runPx); } }, {passive:true});
+    window.addEventListener('resize', runPx);
+    runPx();
+  }
+
   /* ---- Tabs de formularios (comprar / exportación / distribuidor) ---- */
   var TABS={cli:{t:'tab-cli',p:'form-cli'},exp:{t:'tab-exp',p:'form-exp'},dist:{t:'tab-dist',p:'form-dist'}};
   function show(which){
@@ -698,23 +775,29 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
   function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
   function waLink(text){ return 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text); }
 
-  function wire(formId, resId, outId, stId, waBtnId, build){
+  function wire(formId, resId, outId, stId, waBtnId, subject, build){
     var form=document.getElementById(formId);
     form.addEventListener('submit', function(e){
       e.preventDefault();
       if(!form.checkValidity()){ form.reportValidity(); return; }
       var text=build();
-      var out=document.getElementById(outId); out.value=text;
+      document.getElementById(outId).value=text;
       document.getElementById(resId).hidden=false;
       var st=document.getElementById(stId);
       var waBtn=document.getElementById(waBtnId);
-      if(WA_NUMBER){ waBtn.href=waLink(text); waBtn.hidden=false; st.textContent='Listo. Envíalo por WhatsApp o copia el texto.'; }
-      else { waBtn.hidden=true; st.textContent='Listo. Copia el texto y envíalo a Al Campo.'; }
+      if(WA_NUMBER){ waBtn.href=waLink(text); waBtn.hidden=false; } else { waBtn.hidden=true; }
       try{ document.getElementById(resId).scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(_){}
+      st.textContent='Enviando...';
+      var payload={ _subject: subject, _template:'table', resumen:text };
+      try{ new FormData(form).forEach(function(v,k){ payload[k]=v; }); }catch(_){}
+      fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
+        .then(function(r){ return r.json(); })
+        .then(function(d){ st.textContent=(d&&(d.success===true||d.success==='true'))?'¡Recibido! Te contactamos pronto.':'Guardado. Copia el resumen y envíalo por si acaso.'; })
+        .catch(function(){ st.textContent='No se pudo enviar automático. Copia el resumen'+(WA_NUMBER?' o usa WhatsApp.':' y envíalo a Al Campo.'); });
     });
   }
 
-  wire('distForm','d-res','d-out','d-st','d-wa-btn', function(){
+  wire('distForm','d-res','d-out','d-st','d-wa-btn','Nuevo distribuidor · Al Campo', function(){
     var L=['Solicitud de distribuidor · Al Campo',
       'Empresa: '+val('d-emp'),
       'Contacto: '+val('d-con'),
@@ -726,7 +809,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     return L.join('\n');
   });
 
-  wire('cliForm','c-res','c-out','c-st','c-wa-btn', function(){
+  wire('cliForm','c-res','c-out','c-st','c-wa-btn','Nuevo pedido · Al Campo', function(){
     var L=['Pedido · Al Campo',
       'Nombre: '+val('c-nom'),
       'WhatsApp: '+val('c-wa'),
@@ -738,7 +821,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     return L.join('\n');
   });
 
-  wire('expForm','e-res','e-out','e-st','e-wa-btn', function(){
+  wire('expForm','e-res','e-out','e-st','e-wa-btn','Solicitud de exportación · Al Campo', function(){
     var L=['Solicitud de exportación · Al Campo',
       'Empresa: '+val('e-emp'),
       'Contacto: '+val('e-con'),
