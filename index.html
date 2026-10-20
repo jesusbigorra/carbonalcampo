@@ -246,9 +246,11 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 .brand-card:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 30px 60px -30px #000}
 .brand-card .logo-box{display:flex;align-items:center;justify-content:center;background:#fff;padding:1.6rem;height:112px}
 .brand-card .logo-box img{max-width:70%;max-height:64px;object-fit:contain}
-.brand-card .photo{aspect-ratio:4/3;overflow:hidden;background:var(--ink2);position:relative}
-.brand-card .photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.brand-card:hover .photo img{transform:scale(1.05)}
+.brand-card .logo-box.tall{height:clamp(220px,24vw,320px)}
+.brand-card .logo-box.tall img{max-width:60%;max-height:40%}
+.brand-card .photo{aspect-ratio:4/3;overflow:hidden;background:#fff;position:relative;display:flex;align-items:center;justify-content:center;padding:1rem}
+.brand-card .photo img{width:100%;height:100%;object-fit:contain;transition:transform .5s}
+.brand-card:hover .photo img{transform:scale(1.04)}
 .brand-card .info{padding:1.2rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.4rem}
 .brand-card h3{color:var(--fg);font-size:1.3rem}
 .brand-card p{color:var(--muted);font-size:.92rem}
@@ -523,9 +525,8 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
               <p>Marca cárnica premium. Maquilamos su carbón vegetal de marca propia con el mismo estándar de calidad.</p>
             </div>
           </article>
-          <article class="brand-card">
-            <div class="logo-box"><img src="assets/aliados/logo-excelsiorgama.png" alt="Logo Excelsior Gama"></div>
-            <div class="photo"><img src="assets/aliados/producto-excelsiorgama-temp.jpg" alt="Briquetas de carbón vegetal, marca privada Excelsior Gama"></div>
+          <article class="brand-card no-photo">
+            <div class="logo-box tall"><img src="assets/aliados/logo-excelsiorgama.png" alt="Logo Excelsior Gama"></div>
             <div class="info">
               <h3>Excelsior Gama</h3>
               <p>Cadena de automercados líder. Maquilamos su línea de carbón vegetal de marca privada para punto de venta.</p>
