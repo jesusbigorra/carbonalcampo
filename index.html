@@ -568,6 +568,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
           <div class="fld"><label for="d-emp">Empresa o negocio</label><input id="d-emp" name="empresa" type="text" autocomplete="organization" required></div>
           <div class="fld"><label for="d-con">Persona de contacto</label><input id="d-con" name="contacto" type="text" autocomplete="name" required></div>
           <div class="fld"><label for="d-wa">WhatsApp</label><input id="d-wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="0414 000 0000" required></div>
+          <div class="fld"><label for="d-email">Correo electrónico</label><input id="d-email" name="email" type="email" autocomplete="email" placeholder="nombre@empresa.com"></div>
           <div class="fld"><label for="d-ciu">Ciudad y estado</label><input id="d-ciu" name="ciudad" type="text" autocomplete="address-level2" required></div>
           <div class="fld"><label for="d-tipo">Tipo de negocio</label>
             <select id="d-tipo" name="tipo" required>
@@ -593,7 +594,6 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <textarea id="d-out" readonly></textarea>
             <div class="submit" style="margin:0">
               <button class="btn btn-ghost sm" type="button" data-copy="d-out">Copiar resumen</button>
-              <a class="btn btn-ghost sm" id="d-email-btn" target="_blank" rel="noopener">Enviar por correo</a>
               <a class="btn btn-ember sm" id="d-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
             </div>
             <p class="status" id="d-st" role="status" aria-live="polite"></p>
@@ -634,7 +634,6 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <textarea id="e-out" readonly></textarea>
             <div class="submit" style="margin:0">
               <button class="btn btn-ghost sm" type="button" data-copy="e-out">Copiar resumen</button>
-              <a class="btn btn-ghost sm" id="e-email-btn" target="_blank" rel="noopener">Enviar por correo</a>
               <a class="btn btn-ember sm" id="e-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
             </div>
             <p class="status" id="e-st" role="status" aria-live="polite"></p>
@@ -651,6 +650,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
         <form id="cliForm" novalidate>
           <div class="fld"><label for="c-nom">Nombre</label><input id="c-nom" name="nombre" type="text" autocomplete="name" required></div>
           <div class="fld"><label for="c-wa">WhatsApp</label><input id="c-wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="0414 000 0000" required></div>
+          <div class="fld"><label for="c-email">Correo electrónico</label><input id="c-email" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com"></div>
           <div class="fld"><label for="c-ciu">Ciudad o zona de entrega</label><input id="c-ciu" name="ciudad" type="text" autocomplete="address-level2" required></div>
           <div class="fld"><label for="c-prod">Producto</label>
             <select id="c-prod" name="producto" required>
@@ -677,7 +677,6 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
             <textarea id="c-out" readonly></textarea>
             <div class="submit" style="margin:0">
               <button class="btn btn-ghost sm" type="button" data-copy="c-out">Copiar resumen</button>
-              <a class="btn btn-ghost sm" id="c-email-btn" target="_blank" rel="noopener">Enviar por correo</a>
               <a class="btn btn-ember sm" id="c-wa-btn" target="_blank" rel="noopener" hidden>Enviar por WhatsApp</a>
             </div>
             <p class="status" id="c-st" role="status" aria-live="polite"></p>
@@ -825,9 +824,8 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 
   function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
   function waLink(text){ return 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text); }
-  function mailLink(subject, text){ return 'mailto:'+MAIL_TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text); }
 
-  function wire(formId, resId, outId, stId, waBtnId, emailBtnId, subject, build){
+  function wire(formId, resId, outId, stId, waBtnId, subject, build){
     var form=document.getElementById(formId);
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -838,44 +836,44 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
       var st=document.getElementById(stId);
       var waBtn=document.getElementById(waBtnId);
       if(WA_NUMBER){ waBtn.href=waLink(text); waBtn.hidden=false; } else { waBtn.hidden=true; }
-      var emailBtn=document.getElementById(emailBtnId);
-      if(emailBtn) emailBtn.href=mailLink(subject, text);
       try{ document.getElementById(resId).scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(_){}
       st.textContent='Enviando...';
       var payload={ _subject: subject, _template:'table', resumen:text };
       try{ new FormData(form).forEach(function(v,k){ payload[k]=v; }); }catch(_){}
       fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
         .then(function(r){ return r.json(); })
-        .then(function(d){ st.textContent=(d&&(d.success===true||d.success==='true'))?'¡Recibido! Te contactamos pronto.':'Guardado. Si no te contactamos pronto, usa "Enviar por correo" o WhatsApp.'; })
-        .catch(function(){ st.textContent='No se pudo enviar automático. Usa "Enviar por correo" o WhatsApp para asegurar tu solicitud.'; });
+        .then(function(d){ st.textContent=(d&&(d.success===true||d.success==='true'))?'¡Recibido! Te contactamos pronto.':'¡Recibido! Te contactamos pronto. Si quieres, también puedes escribirnos por WhatsApp.'; })
+        .catch(function(){ st.textContent='Guardado. Si no te contactamos en un rato, escríbenos por WhatsApp para asegurar tu solicitud.'; });
     });
   }
 
-  wire('distForm','d-res','d-out','d-st','d-wa-btn','d-email-btn','Nuevo distribuidor · Al Campo', function(){
+  wire('distForm','d-res','d-out','d-st','d-wa-btn','Nuevo distribuidor · Al Campo', function(){
     var L=['Solicitud de distribuidor · Al Campo',
       'Empresa: '+val('d-emp'),
       'Contacto: '+val('d-con'),
-      'WhatsApp: '+val('d-wa'),
-      'Ciudad y estado: '+val('d-ciu'),
+      'WhatsApp: '+val('d-wa')];
+    if(val('d-email')) L.push('Correo: '+val('d-email'));
+    L.push('Ciudad y estado: '+val('d-ciu'),
       'Tipo de negocio: '+val('d-tipo'),
-      'Almacén seco y techado: '+val('d-alm')];
+      'Almacén seco y techado: '+val('d-alm'));
     if(val('d-msg')) L.push('Zona y volumen: '+val('d-msg'));
     return L.join('\n');
   });
 
-  wire('cliForm','c-res','c-out','c-st','c-wa-btn','c-email-btn','Nuevo pedido · Al Campo', function(){
+  wire('cliForm','c-res','c-out','c-st','c-wa-btn','Nuevo pedido · Al Campo', function(){
     var L=['Pedido · Al Campo',
       'Nombre: '+val('c-nom'),
-      'WhatsApp: '+val('c-wa'),
-      'Ciudad: '+val('c-ciu'),
-      'Producto: '+val('c-prod')];
+      'WhatsApp: '+val('c-wa')];
+    if(val('c-email')) L.push('Correo: '+val('c-email'));
+    L.push('Ciudad: '+val('c-ciu'),
+      'Producto: '+val('c-prod'));
     if(val('c-pres')) L.push('Presentación: '+val('c-pres'));
     L.push('Cantidad: '+val('c-cant'));
     if(val('c-msg')) L.push('Comentario: '+val('c-msg'));
     return L.join('\n');
   });
 
-  wire('expForm','e-res','e-out','e-st','e-wa-btn','e-email-btn','Solicitud de exportación · Al Campo', function(){
+  wire('expForm','e-res','e-out','e-st','e-wa-btn','Solicitud de exportación · Al Campo', function(){
     var L=['Solicitud de exportación · Al Campo',
       'Empresa: '+val('e-emp'),
       'Contacto: '+val('e-con'),
