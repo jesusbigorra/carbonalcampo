@@ -1034,7 +1034,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
   var NUM='584141128181', URL='https://carbonalcampo.com/#parrillero', URL_=window.URL;
   var cur=null,cardFile=null,cardBlob=null,tmr=null,logo=new Image(),logoOk=false;
   logo.onload=function(){logoOk=true;schedule()};logo.src='assets/logo.png';
-  function schedule(){clearTimeout(tmr);cardFile=null;cardBlob=null;tmr=setTimeout(render,200)}
+  function schedule(){clearTimeout(tmr);cardFile=null;cardBlob=null;if(dlg){dlg.remove();dlg=null}tmr=setTimeout(render,200)}
   function wrap(ctx,t,x,y,maxW,lh){
     var words=t.split(' '),line='',lines=[];
     words.forEach(function(w){var test=line?line+' '+w:w;if(ctx.measureText(test).width>maxW&&line){lines.push(line);line=w}else{line=test}});
@@ -1118,27 +1118,47 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
   });
   ['pc-c','pc-h'].forEach(function(i){$(i).addEventListener('input',calc)});
   var mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Mac/i.test(navigator.platform));
-  var hint=document.createElement('p');hint.id='pc-hint';hint.setAttribute('role','status');
-  hint.style.cssText='margin:.9rem 0 0;color:var(--ember-2);font-size:.95rem;display:none';
-  $('pc-img').parentNode.appendChild(hint);
-  function say(t){hint.textContent=t;hint.style.display=t?'block':'none'}
   $('pc-share').addEventListener('click',function(e){
     if(mobile&&cardFile&&navigator.canShare&&navigator.canShare({files:[cardFile]})){
       e.preventDefault();
       navigator.share({files:[cardFile],text:'Calcula el tuyo: '+URL}).catch(function(){});
       return;
     }
-    if(!mobile&&cardBlob&&navigator.clipboard&&window.ClipboardItem){
+    if(!mobile&&cardBlob){
       e.preventDefault();
-      var ok=false;
+      var copied=false;
       try{
-        navigator.clipboard.write([new ClipboardItem({'image/png':cardBlob})]).then(function(){say('Imagen copiada. Pégala en el chat de WhatsApp con Ctrl+V (Cmd+V en Mac).')},function(){say('No se pudo copiar. Usa "Guardar imagen" y adjúntala en WhatsApp.')});
-        ok=true;
+        if(navigator.clipboard&&window.ClipboardItem){
+          navigator.clipboard.write([new ClipboardItem({'image/png':cardBlob})]).then(function(){copied=true;stat.textContent='Imagen copiada'},function(){stat.textContent='No se pudo copiar. Guárdala con el botón de abajo.'});
+        }
       }catch(er){}
-      window.open('https://wa.me/?text='+encodeURIComponent('Calcula el tuyo: '+URL),'_blank','noopener');
-      if(!ok)say('Usa "Guardar imagen" y adjúntala en WhatsApp.');
+      showDlg();
     }
   });
+  var dlg=null,stat=document.createElement('p');
+  function showDlg(){
+    if(!dlg){
+      dlg=document.createElement('div');
+      dlg.style.cssText='position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.78)';
+      var box=document.createElement('div');
+      box.style.cssText='max-width:430px;width:100%;max-height:94vh;overflow:auto;background:#1A1714;border:1px solid rgba(255,241,224,.25);border-radius:20px;padding:1.2rem;color:#F1EBE0;font-family:inherit;text-align:center';
+      var im=document.createElement('img');im.alt='Tu asado';im.style.cssText='width:56%;max-width:240px;border-radius:12px;display:block;margin:0 auto .9rem';
+      im.src=URL_.createObjectURL(cardBlob);
+      var t=document.createElement('p');t.style.cssText='margin:0 0 .4rem;font-weight:700;font-size:1.1rem';t.textContent='Tu imagen está lista';
+      stat.style.cssText='margin:0 0 .8rem;color:#FF8A3D;font-size:.95rem';
+      var st=document.createElement('p');st.style.cssText='margin:0 0 1rem;font-size:.95rem;line-height:1.5;color:#A79F92';
+      st.innerHTML='1. Abre WhatsApp.<br>2. Elige el chat.<br>3. Pega la imagen con <b style="color:#F1EBE0">Cmd+V</b> (Ctrl+V en Windows) y envía.';
+      var go=document.createElement('a');go.className='btn btn-ember';go.target='_blank';go.rel='noopener';go.textContent='Abrir WhatsApp';
+      go.href='https://wa.me/?text='+encodeURIComponent('Calcula el tuyo: '+URL);
+      go.style.cssText='display:inline-block;margin:.2rem';
+      var cl=document.createElement('button');cl.type='button';cl.className='btn btn-ghost';cl.textContent='Cerrar';cl.style.margin='.2rem';
+      cl.onclick=function(){dlg.style.display='none'};
+      dlg.onclick=function(ev){if(ev.target===dlg)dlg.style.display='none'};
+      box.appendChild(im);box.appendChild(t);box.appendChild(stat);box.appendChild(st);box.appendChild(go);box.appendChild(cl);
+      dlg.appendChild(box);document.body.appendChild(dlg);
+    }
+    dlg.style.display='flex';
+  }
   $('pc-img').addEventListener('click',function(){
     if(!cardBlob)return;
     var u=URL_.createObjectURL(cardBlob),a=document.createElement('a');
