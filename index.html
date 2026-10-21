@@ -161,12 +161,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .fs-grid .d{grid-row:span 2}
 .fs-grid .d img{aspect-ratio:3/4}
 .fs-grid .e img{aspect-ratio:16/9}
+.fs-grid .f img,.fs-grid .g img{aspect-ratio:4/3}
+.fs-grid .h{grid-column:span 2}
+.fs-grid .h img{position:absolute;inset:0;aspect-ratio:auto}
 @media (max-width:900px){
   .fs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .fs-grid .a,.fs-grid .d{grid-row:span 1}
   .fs-grid .a img,.fs-grid .d img{aspect-ratio:4/3}
+  .fs-grid .h img{position:static;aspect-ratio:16/9}
 }
-@media (max-width:680px){ .fs-grid{grid-template-columns:1fr} }
+@media (max-width:680px){ .fs-grid{grid-template-columns:1fr} .fs-grid .h{grid-column:auto} }
 
 /* ---- Forms ---- */
 .forms{background:var(--ink2);border-block:1px solid var(--line)}
@@ -420,6 +424,9 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
         <figure class="c"><img src="assets/carbon-3kg.jpg" alt="Bolsa de carbón vegetal de 3 kg"><figcaption>Empacado</figcaption></figure>
         <figure class="d"><img src="assets/filtrado-carbon.jpg" alt="Filtrado del carbón con malla"><figcaption>Filtrado</figcaption></figure>
         <figure class="e" style="grid-column:2/4"><img src="assets/lena.jpg" alt="Bolsa de leña de eucalipto Al Campo frente a troncos apilados"><figcaption>Leña de eucalipto</figcaption></figure>
+        <figure class="h"><img src="assets/proceso-bolsas.jpg" alt="Hileras de bolsas de carbón vegetal llenas, listas para cerrar, frente a los hornos" loading="lazy"><figcaption>Carbón listo para empacar</figcaption></figure>
+        <figure class="f"><img src="assets/proceso-hornos-lena.jpg" alt="Hornos de ladrillo con leña de eucalipto apilada y humo de la carbonización" loading="lazy"><figcaption>Hornos y carga de leña</figcaption></figure>
+        <figure class="g"><img src="assets/proceso-hornos.jpg" alt="Hornos de ladrillo en operación, con humo saliendo durante la carbonización" loading="lazy"><figcaption>Carbonización</figcaption></figure>
       </div>
     </div>
   </section>
