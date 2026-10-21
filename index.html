@@ -1117,10 +1117,26 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     });
   });
   ['pc-c','pc-h'].forEach(function(i){$(i).addEventListener('input',calc)});
+  var mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Mac/i.test(navigator.platform));
+  var hint=document.createElement('p');hint.id='pc-hint';hint.setAttribute('role','status');
+  hint.style.cssText='margin:.9rem 0 0;color:var(--ember-2);font-size:.95rem;display:none';
+  $('pc-img').parentNode.appendChild(hint);
+  function say(t){hint.textContent=t;hint.style.display=t?'block':'none'}
   $('pc-share').addEventListener('click',function(e){
-    if(cardFile&&navigator.canShare&&navigator.canShare({files:[cardFile]})){
+    if(mobile&&cardFile&&navigator.canShare&&navigator.canShare({files:[cardFile]})){
       e.preventDefault();
       navigator.share({files:[cardFile],text:'Calcula el tuyo: '+URL}).catch(function(){});
+      return;
+    }
+    if(!mobile&&cardBlob&&navigator.clipboard&&window.ClipboardItem){
+      e.preventDefault();
+      var ok=false;
+      try{
+        navigator.clipboard.write([new ClipboardItem({'image/png':cardBlob})]).then(function(){say('Imagen copiada. Pégala en el chat de WhatsApp con Ctrl+V (Cmd+V en Mac).')},function(){say('No se pudo copiar. Usa "Guardar imagen" y adjúntala en WhatsApp.')});
+        ok=true;
+      }catch(er){}
+      window.open('https://wa.me/?text='+encodeURIComponent('Calcula el tuyo: '+URL),'_blank','noopener');
+      if(!ok)say('Usa "Guardar imagen" y adjúntala en WhatsApp.');
     }
   });
   $('pc-img').addEventListener('click',function(){
