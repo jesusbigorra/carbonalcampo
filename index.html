@@ -465,6 +465,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
           <div class="acts">
             <a class="btn btn-ember" id="pc-share" href="#" target="_blank" rel="noopener">Compartir por WhatsApp</a>
             <a class="btn btn-ghost" id="pc-order" href="#" target="_blank" rel="noopener">Pedir estas bolsas</a>
+            <button type="button" class="btn btn-ghost" id="pc-img">Guardar imagen</button>
           </div>
           <p class="calc-note">Cálculo orientativo. El consumo real varía con la parrilla, el clima y el corte.</p>
         </div>
@@ -1030,7 +1031,62 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
-  var NUM='584141128181', URL='https://carbonalcampo.com/#parrillero';
+  var NUM='584141128181', URL='https://carbonalcampo.com/#parrillero', URL_=window.URL;
+  var cur=null,cardFile=null,cardBlob=null,tmr=null,logo=new Image(),logoOk=false;
+  logo.onload=function(){logoOk=true;schedule()};logo.src='assets/logo.png';
+  function schedule(){clearTimeout(tmr);cardFile=null;cardBlob=null;tmr=setTimeout(render,200)}
+  function wrap(ctx,t,x,y,maxW,lh){
+    var words=t.split(' '),line='',lines=[];
+    words.forEach(function(w){var test=line?line+' '+w:w;if(ctx.measureText(test).width>maxW&&line){lines.push(line);line=w}else{line=test}});
+    if(line)lines.push(line);
+    lines.forEach(function(l,i){ctx.fillText(l,x,y+i*lh)});
+    return y+lines.length*lh;
+  }
+  function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+  function render(){
+    if(!cur||!logoOk)return;
+    var snap=cur;
+    var go=function(){
+      var W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+      var x=cv.getContext('2d'),DISP='Anton,"Liberation Sans Narrow","DejaVu Sans Condensed",Impact,sans-serif',BODY='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',MONO='"Space Mono","DejaVu Sans Mono",monospace';
+      x.fillStyle='#0C0B0A';x.fillRect(0,0,W,H);
+      var g=x.createRadialGradient(880,300,0,880,300,760);g.addColorStop(0,'rgba(255,90,35,.30)');g.addColorStop(1,'rgba(255,90,35,0)');
+      x.fillStyle=g;x.fillRect(0,0,W,H);
+      x.strokeStyle='rgba(255,241,224,.16)';x.lineWidth=2;rr(x,30,30,W-60,H-60,36);x.stroke();
+      x.textBaseline='alphabetic';
+      var lh=150,lw=Math.round(logo.naturalWidth*lh/logo.naturalHeight);
+      x.drawImage(logo,84,84,lw,lh);
+      x.fillStyle='#F1EBE0';x.font='92px '+DISP;x.fillText('AL CAMPO',84+lw+34,168);
+      x.fillStyle='#FF8A3D';x.font='700 28px '+MONO;if('letterSpacing' in x)x.letterSpacing='8px';x.fillText('LA MEJOR BRASA',84+lw+36,218);
+      x.fillStyle='#A79F92';x.font='700 30px '+MONO;if('letterSpacing' in x)x.letterSpacing='6px';x.fillText('MI PRÓXIMO ASADO',84,400);
+      if('letterSpacing' in x)x.letterSpacing='0px';
+      var fs=124,hl=snap.pack.toUpperCase(),maxW=W-168;
+      function cnt(sz){x.font=sz+'px '+DISP;var w=hl.split(' '),l='',n=1;w.forEach(function(t){var q=l?l+' '+t:t;if(x.measureText(q).width>maxW&&l){n++;l=t}else{l=q}});return n}
+      while(fs>56&&cnt(fs)>2)fs-=4;
+      x.fillStyle='#FF8A3D';x.font=fs+'px '+DISP;
+      var y=wrap(x,hl,84,455+fs,maxW,Math.round(fs*1.1));
+      x.fillStyle='#F1EBE0';x.font='500 44px '+BODY;
+      var info=snap.c+(snap.c===1?' comensal':' comensales')+' · '+snap.m+' · '+snap.a;
+      wrap(x,info,84,y+30,maxW,58);
+      var bx=84,bw=W-168,bh=270,by=H-190-40-bh;
+      x.fillStyle='#131110';rr(x,bx,by,bw,bh,24);x.fill();
+      x.strokeStyle='rgba(255,241,224,.28)';x.lineWidth=2;rr(x,bx,by,bw,bh,24);x.stroke();
+      x.fillStyle='#FF8A3D';x.font='700 26px '+MONO;if('letterSpacing' in x)x.letterSpacing='5px';x.fillText('VEREDICTO DEL PARRILLERO',bx+40,by+62);
+      if('letterSpacing' in x)x.letterSpacing='0px';
+      x.fillStyle='#F1EBE0';x.font='700 44px '+BODY;wrap(x,snap.v,bx+40,by+130,bw-80,58);
+      x.strokeStyle='rgba(255,241,224,.2)';x.lineWidth=2;x.beginPath();x.moveTo(84,H-190);x.lineTo(W-84,H-190);x.stroke();
+      x.fillStyle='#A79F92';x.font='400 32px '+BODY;x.fillText('Calcula el tuyo en',84,H-125);
+      x.fillStyle='#F1EBE0';x.font='700 48px '+BODY;x.fillText('carbonalcampo.com/#parrillero',84,H-60);
+      cv.toBlob(function(b){
+        if(!b||snap!==cur)return;
+        cardBlob=b;
+        try{cardFile=new File([b],'mi-asado-al-campo.png',{type:'image/png'})}catch(e){cardFile=null}
+      },'image/png');
+    };
+    if(document.fonts&&document.fonts.load){
+      Promise.all([document.fonts.load('92px Anton'),document.fonts.load('700 46px "Hanken Grotesk"'),document.fonts.load('700 28px "Space Mono"')]).then(go,go);
+    }else{go()}
+  }
   function sel(id){var b=document.querySelector('#'+id+' button[aria-pressed="true"]');return {f:parseFloat(b.dataset.f),n:b.dataset.n}}
   function plural(n,a,b){return n+' '+(n===1?a:b)}
   function calc(){
@@ -1047,6 +1103,7 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     var pack=p.join(' + ');
     var v=kg<=3?'Asado íntimo. Una bolsa y sobra brasa para el café.':kg<=9?'Parrillada seria. Nadie se va con hambre.':kg<=20?'Esto ya es un evento. Avisa a los vecinos antes de que lo hagan ellos.':'Cuñado con parrilla de dos metros detectado. Compra y reza.';
     $('pc-pack').textContent=pack;$('pc-ver').textContent=v;
+    cur={pack:pack,c:c,m:m.n,a:a.n,v:v};schedule();
     var share='Mi próximo asado:\n\n'+plural(c,'comensal','comensales')+', '+m.n+', '+a.n+'.\n\nVeredicto: '+v.charAt(0).toLowerCase()+v.slice(1)+'\n\nNecesitamos '+pack+' de carbón Al Campo.\n\nCalcula el tuyo: '+URL;
     var order='Hola, quiero comprar carbón Al Campo para un asado de '+plural(c,'comensal','comensales')+': '+pack+'.';
     $('pc-share').href='https://wa.me/?text='+encodeURIComponent(share);
@@ -1060,6 +1117,18 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
     });
   });
   ['pc-c','pc-h'].forEach(function(i){$(i).addEventListener('input',calc)});
+  $('pc-share').addEventListener('click',function(e){
+    if(cardFile&&navigator.canShare&&navigator.canShare({files:[cardFile]})){
+      e.preventDefault();
+      navigator.share({files:[cardFile],text:'Calcula el tuyo: '+URL}).catch(function(){});
+    }
+  });
+  $('pc-img').addEventListener('click',function(){
+    if(!cardBlob)return;
+    var u=URL_.createObjectURL(cardBlob),a=document.createElement('a');
+    a.href=u;a.download='mi-asado-al-campo.png';document.body.appendChild(a);a.click();
+    setTimeout(function(){document.body.removeChild(a);URL_.revokeObjectURL(u)},500);
+  });
   calc();
 })();
 </script>
