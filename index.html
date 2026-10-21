@@ -58,9 +58,10 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backgrou
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(12,11,10,.9);z-index:41}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:12px}
 .brand{display:flex;align-items:center;gap:.7rem;min-width:0}
-.brand img{height:42px;width:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
-.brand .wm{font-family:var(--f-display);text-transform:uppercase;font-size:1.25rem;letter-spacing:.04em;line-height:.9;white-space:nowrap}
-.brand .wm small{display:block;font-family:var(--f-mono);font-size:.5rem;letter-spacing:.28em;color:var(--ember-2);font-weight:400}
+.brand{gap:1rem}
+.brand img{height:76px;width:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.brand .wm{font-family:var(--f-display);text-transform:uppercase;font-size:1.7rem;letter-spacing:.04em;line-height:.9;white-space:nowrap}
+.brand .wm small{display:block;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.28em;color:var(--ember-2);font-weight:400;margin-top:.35rem}
 .menu{display:flex;align-items:center;gap:1.75rem}
 .menu nav{display:flex;gap:1.5rem;font-size:.95rem;font-weight:600}
 .menu nav a{color:var(--muted);transition:color .2s}
@@ -215,7 +216,10 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
   .origen .media{grid-template-columns:1fr}
   .origen .media .tall{height:clamp(260px,70vw,360px)}
   form{grid-template-columns:minmax(0,1fr)}
-  .brand .wm{font-size:1.05rem}
+  .brand{gap:.7rem}
+  .brand img{height:56px}
+  .brand .wm{font-size:1.2rem}
+  .brand .wm small{font-size:.5rem}
   .menu .btn{display:none}
 }
 
