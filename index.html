@@ -29,17 +29,17 @@
    AL CAMPO — carbón vegetal premium
    Mundo visual: noche de brasa. Fondo carbón casi negro, acento
    brasa (naranja) con resplandor, verde eucalipto como señal
-   natural. Diseño comprometido en oscuro (un solo tema).
+   natural. Versión blanca plana; solo el hero conserva el resplandor de brasa y las chispas.
    Layout: bandas a ancho completo, columna central 1200px, hero
    a dos columnas con resplandor de brasa y partículas de chispa.
    ============================================================ */
 :root{
-  --ink:#F8F3EB; --ink2:#EFE7DA; --panel:#FFFFFF; --panel2:#FBF7F0;
-  --line:rgba(40,26,12,.12); --line2:rgba(40,26,12,.22);
-  --fg:#1A1714; --muted:#5C554B; --faint:#8E8679;
+  --ink:#fff; --ink2:#fff; --panel:#fff; --panel2:#fff;
+  --line:rgba(0,0,0,.1); --line2:rgba(0,0,0,.2);
+  --fg:#111; --muted:#555; --faint:#888;
   --ember:#FF5A23; --ember-2:#C2410C; --ember-glow:255,90,35;
-  --green:#4C7A1E; --green-2:#3F6A17;
-  --ember-ink:#160800;
+  --green:#2F6B1A; --green-2:#2F6B1A;
+  --ember-ink:#fff;
   --f-display:"Anton","Arial Narrow","Helvetica Neue",sans-serif;
   --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --f-mono:"Space Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -69,8 +69,8 @@ p{margin:0}
 .sec-head{display:flex;flex-direction:column;gap:1.1rem;margin-bottom:clamp(36px,6vw,64px);max-width:62ch}
 
 /* ---- Header ---- */
-header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(248,243,235,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(248,243,235,.9);z-index:41}
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(255,255,255,.9);z-index:41}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:12px}
 .brand{display:flex;align-items:center;gap:.7rem;min-width:0}
 .brand{gap:1rem}
@@ -105,10 +105,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero .cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:.3rem}
 .hero-media{position:relative;justify-self:center;width:100%;max-width:440px}
 .hero-media .frame{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line2);box-shadow:0 40px 80px -30px rgba(60,40,20,.35), inset 0 0 0 1px rgba(255,255,255,.5)}
-.hero-media .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(248,243,235,.55));pointer-events:none}
+.hero-media .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(255,255,255,.55));pointer-events:none}
 .hero-media img{width:100%;height:clamp(380px,56vw,560px);object-fit:cover;object-position:center}
 .hero-media .rim{position:absolute;inset:0;border-radius:18px;box-shadow:inset -60px 0 90px -60px rgba(var(--ember-glow),.9);pointer-events:none}
-.hero-media .tag{position:absolute;left:14px;bottom:14px;z-index:2;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);background:rgba(248,243,235,.6);border:1px solid var(--line2);padding:.4rem .7rem;border-radius:999px;backdrop-filter:blur(6px)}
+.hero-media .tag{position:absolute;left:14px;bottom:14px;z-index:2;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);background:rgba(255,255,255,.6);border:1px solid var(--line2);padding:.4rem .7rem;border-radius:999px;backdrop-filter:blur(6px)}
 
 /* ---- Ticker ---- */
 .ticker{border-block:1px solid var(--line);background:var(--ink2);overflow:hidden}
@@ -127,8 +127,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .card .pic{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--ink2)}
 .card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .card:hover .pic img{transform:scale(1.05)}
-.card .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(248,243,235,.72))}
-.card .pic .chip{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.34rem .6rem;border-radius:999px;background:rgba(248,243,235,.66);border:1px solid var(--line2);backdrop-filter:blur(6px)}
+.card .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(255,255,255,.72))}
+.card .pic .chip{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.34rem .6rem;border-radius:999px;background:rgba(255,255,255,.66);border:1px solid var(--line2);backdrop-filter:blur(6px)}
 .card .pic .chip.exp{color:var(--ember-ink);background:var(--ember);border-color:transparent}
 .card .body{padding:1.4rem 1.4rem 1.6rem;display:flex;flex-direction:column;gap:.7rem;flex:1}
 .card h3{color:var(--fg)}
@@ -144,7 +144,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .origen .media .tall{grid-row:1;height:clamp(320px,46vw,460px)}
 .origen .media .stack{display:flex;flex-direction:column;gap:1rem}
 .origen .media .stack figure{flex:1}
-.origen .media figure .cap{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);background:rgba(248,243,235,.62);border:1px solid var(--line2);padding:.3rem .55rem;border-radius:999px;backdrop-filter:blur(6px)}
+.origen .media figure .cap{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);background:rgba(255,255,255,.62);border:1px solid var(--line2);padding:.3rem .55rem;border-radius:999px;backdrop-filter:blur(6px)}
 .origen .copy{display:flex;flex-direction:column;gap:1.2rem}
 .pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.4rem}
 .pill{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;padding:.5rem .9rem;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}
@@ -178,7 +178,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .stage-grid figure{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--ink2)}
 .stage-grid figure img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .stage-grid figure:hover img{transform:scale(1.05)}
-.stage-grid figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(248,243,235,.55));pointer-events:none}
+.stage-grid figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(255,255,255,.55));pointer-events:none}
 .stage-grid .w2{grid-column:span 2}
 .stage-grid .r2{grid-row:span 2}
 @media (max-width:900px){
@@ -310,6 +310,16 @@ footer.site{padding-block:56px 40px;border-top:1px solid var(--line)}
 .calc-res .acts{display:flex;flex-wrap:wrap;gap:.7rem}
 .calc-note{color:var(--faint);font-size:.82rem;margin:1.1rem 0 0}
 @media (max-width:900px){ .calc{grid-template-columns:minmax(0,1fr)} .calc-res{position:static} }
+
+/* ---- Versión blanca: plana, sin degradados (excepto resplandor y chispas del hero) ---- */
+.export .glow,.hero-media .rim{display:none!important}
+.hero h1 .fire{text-shadow:none}
+.card .pic::after,.hero-media .frame::after,.stage-grid figure::after{display:none}
+.hero-media .frame,.card:hover,.brand-card:hover,.btn-ember{box-shadow:none}
+header.site,body::before{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none}
+.hero-media .tag,.card .pic .chip,.origen .media figure .cap{background:#fff;backdrop-filter:none}
+.ticker,.origen,.forms{background:#fff}
+.ticker{border-block:1px solid var(--line2)}
 </style>
 </head>
 <body>
